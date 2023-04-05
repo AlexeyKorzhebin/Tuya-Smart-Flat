@@ -1,3 +1,4 @@
+from copy import copy
 from fastapi import FastAPI
 from pydantic import BaseModel, validator
 from tinytuya import deviceScan, BulbDevice
@@ -10,7 +11,10 @@ app = FastAPI()
 lamps = []
 devices = []
 
-class Device(BaseModel):
+night_mask = []
+day_mask = []
+
+class Command(BaseModel):
     turn: bool
     colourtemp: int
     dimmer: int
@@ -27,6 +31,22 @@ class Device(BaseModel):
             raise ValueError('dimmer must be between 0 and 100')
         return v
 
+
+night_mode_data = Command(**{
+                        "turn":False,
+                        "colourtemp" : 0, 
+                        "dimmer" : 0 
+                        }
+)
+
+day_mode_data = Command(**{
+                        "turn":True,
+                        "colourtemp" : 0, 
+                        "dimmer" : 100 
+                        })
+
+
+
 @app.on_event("startup")
 async def startup_event():
     try:
@@ -37,110 +57,123 @@ async def startup_event():
             rotation="00:00"
             # format="{time:YYYY-MM-DD HH:mm:ss} | {level} |  {name} | {function} | {line} | {message}",
                 )
-        logger.info("server is starting...")
 
-        start_time = time.time()
+        init() 
 
-        global lamps
-        global devices
-        devices = deviceScan()
-
-        for dd in devices:
-            d = devices[dd]
-            if d['name'].find('Hall Bulb') != -1:
-                l = BulbDevice(d['id'], d['ip'], d['key'])
-                l.set_version(3.3)
-                l.set_retry(True)
-                l.set_socketPersistent(True)
-                l.set_socketNODELAY(True)   
-                lamps.append(l)
-
-        logger.info(f"Found {len(devices)} devices, {len(lamps)} hall lamps on the network within {int(time.time() - start_time)} seconds")
     except Exception as e:
         logger.error(f"Error scanning devices: {e}")
 
-def turn_on_device(bulb_device, temp, dimmer):
+def init():
+
+    logger.info("server is starting...")
+
+    start_time = time.time()
+
+    global lamps
+    global devices
+
+    global day_mask
+    global night_mask
+
+    lamps.clear()
+    devices.clear()
+    day_mask.clear()
+    night_mask.clear()
+
+    devices = deviceScan()
+
+    for dd in devices:
+        d = devices[dd]
+        if d['name'].find('Hall Bulb') != -1:
+            l = BulbDevice(d['id'], d['ip'], d['key'])
+            l.set_version(3.3)
+            l.set_retry(True)
+            l.set_socketPersistent(True)
+            l.set_socketNODELAY(True)   
+            lamps.append(l)
+        # init all elements day_mask True value 
+    day_mask = [True]*len(lamps)
+
+        # init all elements night mask False value except with the first 
+    night_mask = [False]*len(lamps)
+    if len(night_mask) > 0 :  night_mask[0] = True
+    
+    msg = f"Found {len(devices)} devices, {len(lamps)} hall lamps on the network within {int(time.time() - start_time)} seconds"
+    logger.info(msg)
+    return msg
+
+def turn_device(bulb_device, cmd : Command):
 
     device_name = devices[bulb_device.address]['name'] 
     for i in range(3):
-        result = bulb_device.turn_on()
+        result = None
+        if cmd.turn:
+            result = bulb_device.turn_on()
+        else:
+            result = bulb_device.turn_off()
+
         if result is not None and 'Err' in result:
             logger.warning(f"Error turning on device {device_name}: {result['Error']} - {result['Payload']}")
             if i == 2:
                 return {"error": result['Error']}
         else:
-            bulb_device.set_brightness_percentage(dimmer)
-            logger.info(f"Device {device_name} turned on with temp={temp}, dimmer={dimmer} in {i + 1} attempts" )
+            bulb_device.set_brightness_percentage(cmd.dimmer)
+            logger.info(f"Device {device_name} switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp}, dimmer= {cmd.dimmer} in {i + 1} attempts" )
             return {"status": "ok"}
 
 
-def turn_off_device(bulb_device):
-    device_name = devices[bulb_device.address]['name'] 
-    for i in range(3):
-        result = bulb_device.turn_off()
-        if result is not None and 'Err' in result:
-            logger.warning(f"Error turning off device {device_name}: {result['Error']} - {result['Payload']}")
-            if i == 2:
-                return {"error": result['Error']}
-        else:
-            logger.info(f"Device {device_name} turned off in {i + 1} attempts")
-            return {"status": "ok"}
-
-
-def turn_devices(device: Device):
+def turn_devices(cmd: Command, masks):
+    i = 0
     for lamp in lamps:
-        if device.turn:
-            turn_on_device(lamp, device.colourtemp, device.dimmer)
-        else:
-            turn_off_device(lamp)
+        local_cmd = cmd.copy()
+        # check mask using lamps
+        local_cmd.turn = cmd.turn and masks[i]
+        turn_device(lamp, local_cmd)
+        i += 1
+
     return {"status": "ok"}
-
-@app.post("/set_device")
-async def set_device(device: Device):
-    # Set the status of each device
-    res = turn_devices(device)
-    
-    # udp packets didn't go to the lamps so we repeat calls
-    return turn_devices(device)
-    
-
-night_mode_data = Device(**{
-                        "turn":False,
-                        "colourtemp" : 0, 
-                        "dimmer" : 0 
-                        }
-)
-
-day_mode_data = Device(**{
-                        "turn":True,
-                        "colourtemp" : 0, 
-                        "dimmer" : 100 
-                        })
-
 
 
 @app.post("/set_mode")
 async def set_mode(turn: bool, night_mode:bool):
 
     if night_mode == True:
-        
-        if turn and len(lamps) > 0:
-            turn_on_device(lamps[0],night_mode_data.colourtemp, night_mode_data.dimmer)
-            turn_on_device(lamps[0],night_mode_data.colourtemp, night_mode_data.dimmer)
-        else:
-            turn_devices(night_mode_data)
-            turn_devices(night_mode_data)
+        # use only the first lamp, other turn off
+        cmd = night_mode_data.copy()
+        cmd.turn = turn
     else:
-        # Set the status of each device
-        day_mode_data.turn = turn
-        res = turn_devices(day_mode_data)
-        res = turn_devices(day_mode_data)
-        
-    # udp packets didn't go to the lamps so we repeat calls
+        # use all lamps
+        cmd = day_mode_data.copy()
+        cmd.turn = turn
+
+    # udp packets can be not reach to the lamps so we repeat calls twice
+    res = turn_devices(cmd, night_mask if night_mode else day_mask)
+    res = turn_devices(cmd, night_mask if night_mode else day_mask)
+    
     return {"status": "ok"}
+
+@app.post("/set_device")
+async def set_device(cmd: Command):
+    # Set the status of each device
+    mask = [True] * len(lamps)
+    res = turn_devices(cmd,mask)
+    
+    # udp packets can be not reach to the lamps so we repeat calls twice
+    return turn_devices(cmd,mask)
+    
+
+@app.post("/rescan")
+async def rescan():
+    try:
+        msg = init() 
+        return {"status": msg}
+
+    except Exception as e:
+        err = f"Error scanning devices: {e}"
+        logger.error(err)
+        return {"status": err}
 
 
 
 if __name__ == "__main__":
-
     uvicorn.run(app, host="0.0.0.0", port=8000)
