@@ -1,0 +1,471 @@
+{
+    "result": [
+        {
+            "active_time": 1679680773,
+            "biz_type": 18,
+            "category": "dj",
+            "create_time": 1679680773,
+            "icon": "smart/icon/ay1514166115504M4mB5/2aa3393154afc358e664834674e1a1f0.png",
+            "id": "bf1c4d57e0d6a25b4am9r3",
+            "ip": "77.37.180.227",
+            "lat": "55.7900",
+            "local_key": "54b6d5a683b5cab5",
+            "lon": "37.8200",
+            "model": "",
+            "name": "Test bulb",
+            "online": true,
+            "owner_id": "152033342",
+            "product_id": "nh2i3k5q5aenhdq3",
+            "product_name": "Smart Bulb",
+            "status": [
+                {
+                    "code": "switch_led",
+                    "value": true
+                },
+                {
+                    "code": "work_mode",
+                    "value": "white"
+                },
+                {
+                    "code": "bright_value_v2",
+                    "value": 1000
+                },
+                {
+                    "code": "temp_value_v2",
+                    "value": 0
+                },
+                {
+                    "code": "colour_data_v2",
+                    "value": "{\"h\":240,\"s\":1000,\"v\":1000}"
+                },
+                {
+                    "code": "scene_data_v2",
+                    "value": "{\"scene_num\":8,\"scene_units\":[{\"bright\":0,\"h\":0,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000},{\"bright\":0,\"h\":120,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000},{\"bright\":0,\"h\":240,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000},{\"bright\":0,\"h\":61,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000},{\"bright\":0,\"h\":174,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000},{\"bright\":0,\"h\":275,\"s\":1000,\"temperature\":0,\"unit_change_mode\":\"gradient\",\"unit_gradient_duration\":70,\"unit_switch_duration\":70,\"v\":1000}]}"
+                },
+                {
+                    "code": "countdown_1",
+                    "value": 0
+                },
+                {
+                    "code": "music_data",
+                    "value": ""
+                },
+                {
+                    "code": "control_data",
+                    "value": ""
+                },
+                {
+                    "code": "rhythm_mode",
+                    "value": "AAEPfwQBBh4AAAAAFBkBCh4AAAAAZGQBFAAAAAAAUDIBFwAAAAAABQA="
+                },
+                {
+                    "code": "sleep_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "wakeup_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "power_memory",
+                    "value": "AAEA8APoA+gD6APo"
+                },
+                {
+                    "code": "do_not_disturb",
+                    "value": false
+                },
+                {
+                    "code": "cycle_timing",
+                    "value": "AAAA"
+                },
+                {
+                    "code": "random_timing",
+                    "value": "AAAA"
+                }
+            ],
+            "sub": false,
+            "time_zone": "+03:00",
+            "uid": "eu16796806794196iJlK",
+            "update_time": 1680470713,
+            "uuid": "7facd0dcb9f0b468",
+            "category_name": "Light Source",
+            "gateway_id": ""
+        },
+        {
+            "active_time": 1680451349,
+            "biz_type": 18,
+            "category": "dj",
+            "create_time": 1680451349,
+            "icon": "smart/icon/ay1514166115504M4mB5/2aa3393154afc358e664834674e1a1f0.png",
+            "id": "bfe3dcdc70fcdf05f3k2sx",
+            "ip": "77.37.180.227",
+            "lat": "55.7949",
+            "local_key": "584a5ae6e89754ba",
+            "lon": "37.8209",
+            "model": "",
+            "name": "Hall Bulb 3",
+            "online": true,
+            "owner_id": "152033342",
+            "product_id": "nh2i3k5q5aenhdq3",
+            "product_name": "Smart Bulb",
+            "status": [
+                {
+                    "code": "switch_led",
+                    "value": true
+                },
+                {
+                    "code": "work_mode",
+                    "value": "white"
+                },
+                {
+                    "code": "bright_value_v2",
+                    "value": 1000
+                },
+                {
+                    "code": "temp_value_v2",
+                    "value": 0
+                },
+                {
+                    "code": "colour_data_v2",
+                    "value": "{\"h\":0,\"s\":1000,\"v\":1000}"
+                },
+                {
+                    "code": "scene_data_v2",
+                    "value": "{\"scene_num\":1,\"scene_units\":[{\"bright\":200,\"h\":0,\"s\":0,\"temperature\":0,\"unit_change_mode\":\"static\",\"unit_gradient_duration\":13,\"unit_switch_duration\":14,\"v\":0}]}"
+                },
+                {
+                    "code": "countdown_1",
+                    "value": 0
+                },
+                {
+                    "code": "music_data",
+                    "value": ""
+                },
+                {
+                    "code": "control_data",
+                    "value": ""
+                },
+                {
+                    "code": "rhythm_mode",
+                    "value": "AAAAAAA="
+                },
+                {
+                    "code": "sleep_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "wakeup_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "power_memory",
+                    "value": "AAEAAAPoA+gD6APo"
+                },
+                {
+                    "code": "do_not_disturb",
+                    "value": false
+                },
+                {
+                    "code": "cycle_timing",
+                    "value": "AAAA"
+                },
+                {
+                    "code": "random_timing",
+                    "value": "AAAA"
+                }
+            ],
+            "sub": false,
+            "time_zone": "+03:00",
+            "uid": "eu16796806794196iJlK",
+            "update_time": 1680467832,
+            "uuid": "637d9a4b5cd4e70a",
+            "category_name": "Light Source",
+            "gateway_id": ""
+        },
+        {
+            "active_time": 1680451344,
+            "biz_type": 18,
+            "category": "dj",
+            "create_time": 1680450869,
+            "icon": "smart/icon/ay1514166115504M4mB5/2aa3393154afc358e664834674e1a1f0.png",
+            "id": "bfdd50baa83468ab3f9luo",
+            "ip": "77.37.180.227",
+            "lat": "55.7949",
+            "local_key": "a3ee9af037d761ce",
+            "lon": "37.8209",
+            "model": "",
+            "name": "Hall Bulb 1",
+            "online": true,
+            "owner_id": "152033342",
+            "product_id": "nh2i3k5q5aenhdq3",
+            "product_name": "Smart Bulb",
+            "status": [
+                {
+                    "code": "switch_led",
+                    "value": true
+                },
+                {
+                    "code": "work_mode",
+                    "value": "white"
+                },
+                {
+                    "code": "bright_value_v2",
+                    "value": 1000
+                },
+                {
+                    "code": "temp_value_v2",
+                    "value": 0
+                },
+                {
+                    "code": "colour_data_v2",
+                    "value": "{\"h\":0,\"s\":1000,\"v\":1000}"
+                },
+                {
+                    "code": "scene_data_v2",
+                    "value": "{\"scene_num\":1,\"scene_units\":[{\"bright\":200,\"h\":0,\"s\":0,\"temperature\":0,\"unit_change_mode\":\"static\",\"unit_gradient_duration\":13,\"unit_switch_duration\":14,\"v\":0}]}"
+                },
+                {
+                    "code": "countdown_1",
+                    "value": 0
+                },
+                {
+                    "code": "music_data",
+                    "value": ""
+                },
+                {
+                    "code": "control_data",
+                    "value": ""
+                },
+                {
+                    "code": "rhythm_mode",
+                    "value": "AAAAAAA="
+                },
+                {
+                    "code": "sleep_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "wakeup_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "power_memory",
+                    "value": "AAEAAAPoA+gD6APo"
+                },
+                {
+                    "code": "do_not_disturb",
+                    "value": false
+                },
+                {
+                    "code": "cycle_timing",
+                    "value": "AAAA"
+                },
+                {
+                    "code": "random_timing",
+                    "value": "AAAA"
+                }
+            ],
+            "sub": false,
+            "time_zone": "+03:00",
+            "uid": "eu16796806794196iJlK",
+            "update_time": 1680467831,
+            "uuid": "3e542afd344c99d9",
+            "category_name": "Light Source",
+            "gateway_id": ""
+        },
+        {
+            "active_time": 1680451343,
+            "biz_type": 18,
+            "category": "dj",
+            "create_time": 1680451106,
+            "icon": "smart/icon/ay1514166115504M4mB5/2aa3393154afc358e664834674e1a1f0.png",
+            "id": "bfb64c21606672f871z7af",
+            "ip": "77.37.180.227",
+            "lat": "55.7949",
+            "local_key": "a97b92d3b1b28da6",
+            "lon": "37.8209",
+            "model": "",
+            "name": "Hall Bulb 2",
+            "online": true,
+            "owner_id": "152033342",
+            "product_id": "nh2i3k5q5aenhdq3",
+            "product_name": "Smart Bulb",
+            "status": [
+                {
+                    "code": "switch_led",
+                    "value": true
+                },
+                {
+                    "code": "work_mode",
+                    "value": "white"
+                },
+                {
+                    "code": "bright_value_v2",
+                    "value": 1000
+                },
+                {
+                    "code": "temp_value_v2",
+                    "value": 0
+                },
+                {
+                    "code": "colour_data_v2",
+                    "value": "{\"h\":0,\"s\":1000,\"v\":1000}"
+                },
+                {
+                    "code": "scene_data_v2",
+                    "value": "{\"scene_num\":1,\"scene_units\":[{\"bright\":200,\"h\":0,\"s\":0,\"temperature\":0,\"unit_change_mode\":\"static\",\"unit_gradient_duration\":13,\"unit_switch_duration\":14,\"v\":0}]}"
+                },
+                {
+                    "code": "countdown_1",
+                    "value": 0
+                },
+                {
+                    "code": "music_data",
+                    "value": ""
+                },
+                {
+                    "code": "control_data",
+                    "value": ""
+                },
+                {
+                    "code": "rhythm_mode",
+                    "value": "AAAAAAA="
+                },
+                {
+                    "code": "sleep_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "wakeup_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "power_memory",
+                    "value": "AAEAAAPoA+gD6APo"
+                },
+                {
+                    "code": "do_not_disturb",
+                    "value": false
+                },
+                {
+                    "code": "cycle_timing",
+                    "value": "AAAA"
+                },
+                {
+                    "code": "random_timing",
+                    "value": "AAAA"
+                }
+            ],
+            "sub": false,
+            "time_zone": "+03:00",
+            "uid": "eu16796806794196iJlK",
+            "update_time": 1680467831,
+            "uuid": "f86ac57476c517ab",
+            "category_name": "Light Source",
+            "gateway_id": ""
+        },
+        {
+            "active_time": 1680451349,
+            "biz_type": 18,
+            "category": "dj",
+            "create_time": 1680451350,
+            "icon": "smart/icon/ay1514166115504M4mB5/2aa3393154afc358e664834674e1a1f0.png",
+            "id": "bf74818b24387c84935psg",
+            "ip": "77.37.180.227",
+            "lat": "55.7949",
+            "local_key": "d25ad883a97b19b2",
+            "lon": "37.8209",
+            "model": "",
+            "name": "Hall Bulb 4",
+            "online": true,
+            "owner_id": "152033342",
+            "product_id": "nh2i3k5q5aenhdq3",
+            "product_name": "Smart Bulb",
+            "status": [
+                {
+                    "code": "switch_led",
+                    "value": true
+                },
+                {
+                    "code": "work_mode",
+                    "value": "white"
+                },
+                {
+                    "code": "bright_value_v2",
+                    "value": 1000
+                },
+                {
+                    "code": "temp_value_v2",
+                    "value": 0
+                },
+                {
+                    "code": "colour_data_v2",
+                    "value": "{\"h\":0,\"s\":1000,\"v\":1000}"
+                },
+                {
+                    "code": "scene_data_v2",
+                    "value": "{\"scene_num\":1,\"scene_units\":[{\"bright\":200,\"h\":0,\"s\":0,\"temperature\":0,\"unit_change_mode\":\"static\",\"unit_gradient_duration\":13,\"unit_switch_duration\":14,\"v\":0}]}"
+                },
+                {
+                    "code": "countdown_1",
+                    "value": 0
+                },
+                {
+                    "code": "music_data",
+                    "value": ""
+                },
+                {
+                    "code": "control_data",
+                    "value": ""
+                },
+                {
+                    "code": "rhythm_mode",
+                    "value": "AAAAAAA="
+                },
+                {
+                    "code": "sleep_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "wakeup_mode",
+                    "value": "AAA="
+                },
+                {
+                    "code": "power_memory",
+                    "value": "AAEAAAPoA+gD6APo"
+                },
+                {
+                    "code": "do_not_disturb",
+                    "value": false
+                },
+                {
+                    "code": "cycle_timing",
+                    "value": "AAAA"
+                },
+                {
+                    "code": "random_timing",
+                    "value": "AAAA"
+                }
+            ],
+            "sub": false,
+            "time_zone": "+03:00",
+            "uid": "eu16796806794196iJlK",
+            "update_time": 1680467831,
+            "uuid": "67950bec97fe66e4",
+            "category_name": "Light Source",
+            "gateway_id": ""
+        }
+    ],
+    "success": true,
+    "t": 1680472709087,
+    "tid": "80336bb3d1a111ed94b47648064b5440",
+    "fetches": 1,
+    "total": 5,
+    "file": {
+        "name": "tuya-raw.json",
+        "description": "Full raw list of Tuya devices.",
+        "account": "48c7cxsg5fe38v4hf8kq",
+        "date": "2023-04-03T00:58:29.877572",
+        "tinytuya": "1.12.2"
+    }
+}

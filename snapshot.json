@@ -1,0 +1,155 @@
+{
+    "timestamp": 1680472720.0514212,
+    "devices": [
+        {
+            "id": "bf74818b24387c84935psg",
+            "ip": "192.168.1.27",
+            "active": 2,
+            "ablilty": 0,
+            "encrypt": true,
+            "productKey": "key8u54q9dtru5jw",
+            "name": "Hall Bulb 4",
+            "key": "d25ad883a97b19b2",
+            "mac": "d4:a6:51:ff:52:17",
+            "token": "",
+            "wf_cfg": "",
+            "dev_type": "default",
+            "err": "",
+            "type": "default",
+            "dps": {
+                "dps": {
+                    "20": true,
+                    "21": "white",
+                    "22": 1000,
+                    "23": 0,
+                    "24": "000003e803e8",
+                    "25": "000e0d0000000000000000c80000",
+                    "26": 0,
+                    "34": false
+                }
+            },
+            "origin": "broadcast",
+            "ver": "3.3"
+        },
+        {
+            "id": "bfe3dcdc70fcdf05f3k2sx",
+            "ip": "192.168.1.26",
+            "active": 2,
+            "ablilty": 0,
+            "encrypt": true,
+            "productKey": "key8u54q9dtru5jw",
+            "name": "Hall Bulb 3",
+            "key": "584a5ae6e89754ba",
+            "mac": "d8:1f:12:00:03:55",
+            "token": "",
+            "wf_cfg": "",
+            "dev_type": "default",
+            "err": "",
+            "type": "default",
+            "dps": {
+                "dps": {
+                    "20": true,
+                    "21": "white",
+                    "22": 1000,
+                    "23": 0,
+                    "24": "000003e803e8",
+                    "25": "000e0d0000000000000000c80000",
+                    "26": 0,
+                    "34": false
+                }
+            },
+            "origin": "broadcast",
+            "ver": "3.3"
+        },
+        {
+            "id": "bfdd50baa83468ab3f9luo",
+            "ip": "192.168.1.21",
+            "active": 2,
+            "ablilty": 0,
+            "encrypt": true,
+            "productKey": "key8u54q9dtru5jw",
+            "name": "Hall Bulb 1",
+            "key": "a3ee9af037d761ce",
+            "mac": "d4:a6:51:f7:71:62",
+            "token": "",
+            "wf_cfg": "",
+            "dev_type": "default",
+            "err": "",
+            "type": "default",
+            "dps": {
+                "dps": {
+                    "20": true,
+                    "21": "white",
+                    "22": 1000,
+                    "23": 0,
+                    "24": "000003e803e8",
+                    "25": "000e0d0000000000000000c80000",
+                    "26": 0,
+                    "34": false
+                }
+            },
+            "origin": "broadcast",
+            "ver": "3.3"
+        },
+        {
+            "id": "bfb64c21606672f871z7af",
+            "ip": "192.168.1.23",
+            "active": 2,
+            "ablilty": 0,
+            "encrypt": true,
+            "productKey": "key8u54q9dtru5jw",
+            "name": "Hall Bulb 2",
+            "key": "a97b92d3b1b28da6",
+            "mac": "38:1f:8d:f7:da:56",
+            "token": "",
+            "wf_cfg": "",
+            "dev_type": "default",
+            "err": "",
+            "type": "default",
+            "dps": {
+                "dps": {
+                    "20": true,
+                    "21": "white",
+                    "22": 1000,
+                    "23": 0,
+                    "24": "000003e803e8",
+                    "25": "000e0d0000000000000000c80000",
+                    "26": 0,
+                    "34": false
+                }
+            },
+            "origin": "broadcast",
+            "ver": "3.3"
+        },
+        {
+            "id": "bf1c4d57e0d6a25b4am9r3",
+            "ip": "192.168.1.41",
+            "active": 2,
+            "ablilty": 0,
+            "encrypt": true,
+            "productKey": "key8u54q9dtru5jw",
+            "name": "Test bulb",
+            "key": "54b6d5a683b5cab5",
+            "mac": "d4:a6:51:ff:21:54",
+            "token": "",
+            "wf_cfg": "",
+            "dev_type": "default",
+            "err": "",
+            "type": "default",
+            "dps": {
+                "dps": {
+                    "20": true,
+                    "21": "white",
+                    "22": 1000,
+                    "23": 0,
+                    "24": "00f003e803e8",
+                    "25": "07464602000003e803e800000000464602007803e803e80000000046460200f003e803e800000000464602003d03e803e80000000046460200ae03e803e800000000464602011303e803e800000000",
+                    "26": 0,
+                    "34": false
+                }
+            },
+            "origin": "broadcast",
+            "ver": "3.3"
+        }
+    ]
+}
