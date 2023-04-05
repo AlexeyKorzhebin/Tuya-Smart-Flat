@@ -60,6 +60,7 @@ async def startup_event():
         logger.error(f"Error scanning devices: {e}")
 
 def turn_on_device(bulb_device, temp, dimmer):
+
     device_name = devices[bulb_device.address]['name'] 
     for i in range(3):
         result = bulb_device.turn_on()
@@ -123,14 +124,15 @@ async def set_mode(turn: bool, night_mode:bool):
 
     if night_mode == True:
         
-        if turn:
-            turn_on_device(night_mode_data)
-            turn_on_device(night_mode_data)
+        if turn and len(lamps) > 0:
+            turn_on_device(lamps[0],night_mode_data.colourtemp, night_mode_data.dimmer)
+            turn_on_device(lamps[0],night_mode_data.colourtemp, night_mode_data.dimmer)
         else:
             turn_devices(night_mode_data)
             turn_devices(night_mode_data)
     else:
         # Set the status of each device
+        day_mode_data.turn = turn
         res = turn_devices(day_mode_data)
         res = turn_devices(day_mode_data)
         
