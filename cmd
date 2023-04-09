@@ -1,0 +1,1 @@
+sudo docker run  -p 6666-8000:6666-8000 --net host -v /var/log/smartflat:/home/app/logs alekseykorzhebin/smart_flat:0.2 
