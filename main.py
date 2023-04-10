@@ -100,7 +100,14 @@ def init():
     
     msg = f"Found {len(devices)} devices, {len(lamps)} hall lamps on the network within {int(time.time() - start_time)} seconds"
     logger.info(msg)
-    return msg
+    logger.info(devices)
+    logger.info(lamps)
+
+    res = {"msg": msg,
+           "lamps": lamps,
+           "devices": devices}
+
+    return res
 
 def turn_device(bulb_device, cmd : Command):
 
@@ -165,13 +172,13 @@ async def set_device(cmd: Command):
 @app.post("/rescan")
 async def rescan():
     try:
-        msg = init() 
-        return {"status": msg}
+        res = init() 
+        return {"result": res}
 
     except Exception as e:
         err = f"Error scanning devices: {e}"
         logger.error(err)
-        return {"status": err}
+        return {"result": err}
 
 
 
