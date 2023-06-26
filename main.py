@@ -1,5 +1,7 @@
+import asyncio
 from copy import copy
-from fastapi import FastAPI
+# from fastapi import BackgroundTasks,FastAPI
+from fastapi import BackgroundTasks, Depends, FastAPI
 from pydantic import BaseModel, validator
 from tinytuya import deviceScan, BulbDevice
 from loguru import logger
@@ -109,40 +111,49 @@ def init():
 
     return res
 
-def turn_device(bulb_device, cmd : Command):
+async def dimmer_device(bulb_device, cmd : Command):
+    start_time = time.time()
 
-    device_name = devices[bulb_device.address]['name'] 
-    for i in range(3):
-        result = None
-        if cmd.turn:
-            result = bulb_device.turn_on()
-        else:
-            result = bulb_device.turn_off()
+    bulb_device.set_brightness_percentage(cmd.dimmer)
+    logger.info(f"Device {devices[bulb_device.address]['name'] } {time.time() - start_time} seconds,dimmer= {cmd.dimmer} " )
+    return {"status": "ok"}
 
-        if result is not None and 'Err' in result:
-            logger.warning(f"Error turning on device {device_name}: {result['Error']} - {result['Payload']}")
-            if i == 2:
-                return {"error": result['Error']}
-        else:
-            bulb_device.set_brightness_percentage(cmd.dimmer)
-            logger.info(f"Device {device_name} switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp}, dimmer= {cmd.dimmer} in {i + 1} attempts" )
-            return {"status": "ok"}
+async def turn_device(bulb_device, cmd : Command):
+
+    start_time = time.time()
+    result = None
+    if cmd.turn:
+        result = bulb_device.turn_on()
+    else:
+        result = bulb_device.turn_off()
+
+    if result is not None and 'Err' in result:
+        logger.warning(f"Error turning on device {devices[bulb_device.address]['name'] }: {result['Error']} - {result['Payload']}")
+    else:
+        logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp} ")
 
 
-def turn_devices(cmd: Command, masks):
+def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
+
     i = 0
     for lamp in lamps:
         local_cmd = cmd.copy()
         # check mask using lamps
         local_cmd.turn = cmd.turn and masks[i]
-        turn_device(lamp, local_cmd)
+        background_tasks.add_task(turn_device,lamp, local_cmd)
         i += 1
+
+    for lamp in lamps:
+        # set brightness of the device
+        background_tasks.add_task(dimmer_device,lamp, local_cmd)
+
+
 
     return {"status": "ok"}
 
 
 @app.post("/set_mode")
-async def set_mode(turn: bool, night_mode:bool):
+async def set_mode(turn: bool, night_mode:bool,background_tasks: BackgroundTasks):
 
     if night_mode == True:
         # use only the first lamp, other turn off
@@ -154,8 +165,8 @@ async def set_mode(turn: bool, night_mode:bool):
         cmd.turn = turn
 
     # udp packets can be not reach to the lamps so we repeat calls twice
-    res = turn_devices(cmd, night_mask if night_mode else day_mask)
-    res = turn_devices(cmd, night_mask if night_mode else day_mask)
+    res = turn_devices(cmd, night_mask if night_mode else day_mask, background_tasks)
+    # res = turn_devices(cmd, night_mask if night_mode else day_mask)
     
     return {"status": "ok"}
 
@@ -179,6 +190,37 @@ async def rescan():
         err = f"Error scanning devices: {e}"
         logger.error(err)
         return {"result": err}
+
+
+def test_lamp_turn(lamp, switch:bool):   
+    start_time = time.time()
+    if switch == True:
+        lamp.turn_on()
+    else:
+        lamp.turn_off()
+
+    logger.info(f'lamp {lamp.address}:  {time.time() - start_time} seconds')
+
+
+
+# Маршрут API для включения группы ламп
+@app.post('/lamp/on')
+async def lamp_on(background_tasks: BackgroundTasks):
+
+    # Создание массива задач для включения ламп
+    for lamp in lamps:
+        background_tasks.add_task(test_lamp_turn, lamp, True)
+   
+
+# Маршрут API для выключения группы ламп
+@app.post('/lamp/off')
+async def lamp_off(background_tasks: BackgroundTasks):
+    # Создание массива задач для выключения ламп
+
+    for lamp in lamps:
+        # background_tasks.add_task(lamp.turn_off)
+        background_tasks.add_task(test_lamp_turn, lamp, False)
+
 
 
 
