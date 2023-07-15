@@ -8,6 +8,9 @@ from loguru import logger
 import uvicorn
 import time
 
+import concurrent.futures 
+from functools import partial
+
 app = FastAPI()
 
 lamps = []
@@ -118,7 +121,7 @@ async def dimmer_device(bulb_device, cmd : Command):
     logger.info(f"Device {devices[bulb_device.address]['name'] } {time.time() - start_time} seconds,dimmer= {cmd.dimmer} " )
     return {"status": "ok"}
 
-async def turn_device(bulb_device, cmd : Command):
+def turn_device(bulb_device, cmd : Command):
 
     start_time = time.time()
     result = None
@@ -133,20 +136,42 @@ async def turn_device(bulb_device, cmd : Command):
         logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp} ")
 
 
-def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
+async def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
 
     i = 0
-    for lamp in lamps:
-        local_cmd = cmd.copy()
-        # check mask using lamps
-        local_cmd.turn = cmd.turn and masks[i]
-        background_tasks.add_task(turn_device,lamp, local_cmd)
-        i += 1
+    t = time.time()
 
-    for lamp in lamps:
-        # set brightness of the device
-        background_tasks.add_task(dimmer_device,lamp, local_cmd)
+    coros = []
+    loop = asyncio.get_event_loop()
 
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+        for lamp in lamps:
+            local_cmd = cmd.copy()
+            # check mask using lamps
+            local_cmd.turn = cmd.turn and masks[i]
+            coros.append( loop.run_in_executor(pool,partial(turn_device,bulb_device = lamp, cmd = local_cmd)))
+
+            # background_tasks.add_task(turn_device,lamp, local_cmd)
+            i += 1
+        await asyncio.gather(*coros)
+
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
+    #     for lamp in lamps:
+    #         # set brightness of the device
+    #         # background_tasks.add_task(dimmer_device,lamp, local_cmd)
+    #     await asyncio.gather(*coros)
+
+
+
+
+
+
+        # for i in range(5):
+        #     coros.append( loop.run_in_executor(pool,partial(sync,i = i)))
+
+
+    logger.info(f'turn_devices function executed {time.time() - t} sec')
 
 
     return {"status": "ok"}
@@ -165,7 +190,7 @@ async def set_mode(turn: bool, night_mode:bool,background_tasks: BackgroundTasks
         cmd.turn = turn
 
     # udp packets can be not reach to the lamps so we repeat calls twice
-    res = turn_devices(cmd, night_mask if night_mode else day_mask, background_tasks)
+    res = await turn_devices(cmd, night_mask if night_mode else day_mask, background_tasks)
     # res = turn_devices(cmd, night_mask if night_mode else day_mask)
     
     return {"status": "ok"}
@@ -225,4 +250,4 @@ async def lamp_off(background_tasks: BackgroundTasks):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)
