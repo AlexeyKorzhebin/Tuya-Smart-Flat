@@ -136,7 +136,7 @@ def turn_device(bulb_device, cmd : Command):
         logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp} ")
 
 
-async def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
+async def turn_devices(cmd: Command, masks):
 
     i = 0
     t = time.time()
@@ -152,24 +152,8 @@ async def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
             local_cmd.turn = cmd.turn and masks[i]
             coros.append( loop.run_in_executor(pool,partial(turn_device,bulb_device = lamp, cmd = local_cmd)))
 
-            # background_tasks.add_task(turn_device,lamp, local_cmd)
             i += 1
         await asyncio.gather(*coros)
-
-    # with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
-    #     for lamp in lamps:
-    #         # set brightness of the device
-    #         # background_tasks.add_task(dimmer_device,lamp, local_cmd)
-    #     await asyncio.gather(*coros)
-
-
-
-
-
-
-        # for i in range(5):
-        #     coros.append( loop.run_in_executor(pool,partial(sync,i = i)))
-
 
     logger.info(f'turn_devices function executed {time.time() - t} sec')
 
@@ -178,7 +162,7 @@ async def turn_devices(cmd: Command, masks, background_tasks: BackgroundTasks):
 
 
 @app.post("/set_mode")
-async def set_mode(turn: bool, night_mode:bool,background_tasks: BackgroundTasks):
+async def set_mode(turn: bool, night_mode:bool):
 
     if night_mode == True:
         # use only the first lamp, other turn off
@@ -190,8 +174,8 @@ async def set_mode(turn: bool, night_mode:bool,background_tasks: BackgroundTasks
         cmd.turn = turn
 
     # udp packets can be not reach to the lamps so we repeat calls twice
-    res = await turn_devices(cmd, night_mask if night_mode else day_mask, background_tasks)
-    # res = turn_devices(cmd, night_mask if night_mode else day_mask)
+    res = await turn_devices(cmd, night_mask if night_mode else day_mask)
+    res = await turn_devices(cmd, night_mask if night_mode else day_mask)
     
     return {"status": "ok"}
 
