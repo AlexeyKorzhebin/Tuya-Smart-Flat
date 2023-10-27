@@ -10,15 +10,10 @@ import lamp as l
 
 app = FastAPI()
 
-
-
-
-
-
 night_mode_data = Command(**{
                         "turn":False,
                         "colourtemp" : 0, 
-                        "dimmer" : 0 
+                        "dimmer" : 10 
                         }
 )
 
@@ -54,14 +49,16 @@ async def set_mode(turn: bool, night_mode:bool):
         # use only the first lamp, other turn off
         cmd = night_mode_data.copy()
         cmd.turn = turn
+        cmd.dimmer = 10
     else:
         # use all lamps
         cmd = day_mode_data.copy()
         cmd.turn = turn
+        cmd.dimmer = 100
 
     # udp packets can be not reach to the lamps so we repeat calls twice
     res = await turn_devices(cmd, l.night_mask if night_mode else l.day_mask)
-    res = await turn_devices(cmd, l.night_mask if night_mode else l.day_mask)
+    # res = await turn_devices(cmd, l.night_mask if night_mode else l.day_mask)
     
     return {"status": "ok"}
 

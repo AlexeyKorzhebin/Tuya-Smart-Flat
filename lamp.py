@@ -89,13 +89,16 @@ def turn_device(bulb_device, cmd : Command):
     result = None
     if cmd.turn:
         result = bulb_device.turn_on()
+        bulb_device.set_brightness_percentage(cmd.dimmer)
     else:
         result = bulb_device.turn_off()
+        bulb_device.set_brightness_percentage(cmd.dimmer)
+
 
     if result is not None and 'Err' in result:
-        logger.warning(f"Error turning on device {devices[bulb_device.address]['name'] }: {result['Error']} - {result['Payload']}")
+        logger.error(f"Error turning on device {devices[bulb_device.address]['name'] }: {result['Error']} - {result['Payload']}")
     else:
-        logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with temp = {cmd.colourtemp} ")
+        logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with dimmer = {cmd.dimmer} ")
 
 
 async def turn_devices(cmd: Command, masks):

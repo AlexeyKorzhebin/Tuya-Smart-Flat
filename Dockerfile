@@ -5,6 +5,7 @@ RUN mkdir /var/log/smartflat
 
 
 COPY main.py .
+COPY lamp.py .
 COPY requirements.txt .
 COPY snapshot.json .
 COPY devices.json .
