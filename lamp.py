@@ -32,7 +32,7 @@ class Command(BaseModel):
 
 def init():
 
-    logger.info("server is starting...")
+    logger.info("server v0.25 is starting...")
 
     start_time = time.time()
 
@@ -90,9 +90,13 @@ def turn_device(bulb_device, cmd : Command):
     if cmd.turn:
         result = bulb_device.turn_on()
         bulb_device.set_brightness_percentage(cmd.dimmer)
+        # udp packets can be not reach to the lamps so we repeat calls twice
+        result = bulb_device.turn_on()
+        bulb_device.set_brightness_percentage(cmd.dimmer)
     else:
         result = bulb_device.turn_off()
-        bulb_device.set_brightness_percentage(cmd.dimmer)
+        # udp packets can be not reach to the lamps so we repeat calls twice
+        result = bulb_device.turn_off()
 
 
     if result is not None and 'Err' in result:
@@ -101,7 +105,7 @@ def turn_device(bulb_device, cmd : Command):
         logger.info(f"turned lamp {devices[bulb_device.address]['name'] }:  {time.time() - start_time} seconds, switch = {'on' if cmd.turn else 'off'} with dimmer = {cmd.dimmer} ")
 
 
-async def turn_devices(cmd: Command, masks):
+async def turn_devices(cmd: Command, mask):
 
     i = 0
     t = time.time()
@@ -114,7 +118,7 @@ async def turn_devices(cmd: Command, masks):
         for lamp in lamps:
             local_cmd = cmd.copy()
             # check mask using lamps
-            local_cmd.turn = cmd.turn and masks[i]
+            local_cmd.turn = mask[i]
             coros.append( loop.run_in_executor(pool,partial(turn_device,bulb_device = lamp, cmd = local_cmd)))
 
             i += 1
