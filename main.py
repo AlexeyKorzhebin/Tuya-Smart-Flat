@@ -36,7 +36,7 @@ async def set_mode(turn: bool, night_mode:bool):
     if night_mode == True:
         # use only the first lamp, other turn off
         mask = [False] * len(lamps)
-        if len(lamps) > 0:
+        if len(lamps) > 0 and turn == True:
             mask[0] = True 
 
     else:
