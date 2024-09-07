@@ -51,13 +51,13 @@ def init():
 
     for dd in devices:
         d = devices[dd]
-        if d['name'].find('Hall Bulb') != -1:
-            l = BulbDevice(d['id'], d['ip'], d['key'])
-            l.set_version(3.3)
-            l.set_retry(True)
-            l.set_socketPersistent(True)
-            l.set_socketNODELAY(True)   
-            lamps.append(l)
+        #if d['name'].find('Hall Bulb') != -1:
+        l = BulbDevice(d['id'], d['ip'], d['key'])
+        l.set_version(3.3)
+        l.set_retry(True)
+        l.set_socketPersistent(True)
+        l.set_socketNODELAY(True)   
+        lamps.append(l)
         # init all elements day_mask True value 
     day_mask = [True]*len(lamps)
 
